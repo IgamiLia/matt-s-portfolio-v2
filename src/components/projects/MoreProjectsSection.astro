@@ -1,0 +1,15 @@
+---
+import type { Project } from "@/types";
+import ProjectList from "@projects/ProjectList.astro";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section aria-labelledby="more-projects-title">
+  <h2 id="more-projects-title">Más proyectos</h2>
+  <ProjectList projects={projects} />
+</section>

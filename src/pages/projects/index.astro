@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import MoreProjectsSection from "@projects/MoreProjectsSection.astro";
+import projects from "@data/projects.json";
+---
+
+<BaseLayout
+  title="Proyectos | Matt - Desarrollador Web"
+  description="Explora todos mis proyectos de desarrollo web: aplicaciones, juegos y experimentos construidos con Astro, TypeScript y tecnologías modernas."
+>
+  <MoreProjectsSection projects={projects.slice(4)} />
+</BaseLayout>

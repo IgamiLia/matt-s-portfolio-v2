@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@import "@fontsource-variable/orbitron";
+
+@theme {
+  --font-orbitron: "Orbitron Variable", sans-serif;
+}
+
+html {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #f97316 #171717;
+  background-color: #171717;
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+/* Scroll suave para la navegación por anclas (respeta reduced motion) */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+::view-transition-group(project-morph) {
+  animation-duration: 350ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}

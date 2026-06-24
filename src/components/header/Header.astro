@@ -1,0 +1,82 @@
+---
+const links = [
+  { href: "/#home", label: "Home", section: "home" },
+  { href: "/#projects", label: "Proyectos", section: "projects" },
+  { href: "/#about", label: "Sobre mí", section: "about" },
+];
+---
+
+<header class="sticky top-0 left-0 z-50 w-full shadow-md backdrop-blur-sm">
+  <nav
+    class="mx-auto flex h-20 max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8"
+  >
+    <ul
+      class="flex items-center justify-center gap-2 text-sm font-medium sm:gap-4 lg:gap-6"
+    >
+      {
+        links.map(({ href, label, section }) => (
+          <li>
+            <a
+              href={href}
+              data-section={section}
+              class="block rounded-md px-4 py-2 tracking-wide transition-colors duration-300 ease-in-out hover:bg-yellow-100/70 aria-[current=page]:bg-yellow-100/70 sm:px-6"
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <button
+          id="contact-link"
+          type="button"
+          class="block cursor-pointer rounded-md px-4 py-2 tracking-wide transition-colors duration-300 ease-in-out hover:bg-yellow-100/70 sm:px-6"
+        >
+          Contacto
+        </button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  function initHeaderNav(): void {
+    const links = document.querySelectorAll<HTMLAnchorElement>(
+      "header a[data-section]",
+    );
+    if (!links.length) return;
+
+    // Resalta el link de la sección visible en el viewport
+    const sections = [...links]
+      .map((link) => document.getElementById(link.dataset.section!))
+      .filter((section): section is HTMLElement => section !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          links.forEach((link) => {
+            if (link.dataset.section === entry.target.id) {
+              link.setAttribute("aria-current", "page");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    // Contacto: abre la modal (cuando exista #contactModal)
+    document.getElementById("contact-link")?.addEventListener("click", () => {
+      const contactModal = document.getElementById(
+        "contactModal",
+      ) as HTMLDialogElement | null;
+      contactModal?.showModal();
+    });
+  }
+
+  document.addEventListener("astro:page-load", initHeaderNav);
+</script>

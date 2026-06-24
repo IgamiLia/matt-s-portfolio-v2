@@ -1,0 +1,88 @@
+---
+import { socials } from "@data/socials";
+---
+
+<dialog
+  id="contactModal"
+  aria-labelledby="contact-modal-title"
+  class="m-auto w-[90vw] max-w-md scale-95 overflow-hidden rounded-lg border-2 border-white/10 bg-neutral-900 p-0 text-amber-50 opacity-0 shadow-[8px_8px_0_rgba(0,0,0,0.45)] transition-[opacity,transform,overlay,display] transition-discrete duration-300 ease-out open:scale-100 open:opacity-100 starting:open:scale-95 starting:open:opacity-0 backdrop:bg-black/70 backdrop:opacity-0 backdrop:backdrop-blur-sm backdrop:transition-[opacity,overlay,display] backdrop:transition-discrete backdrop:duration-300 open:backdrop:opacity-100 starting:open:backdrop:opacity-0 sm:max-w-lg lg:max-w-xl"
+>
+  <div
+    aria-hidden="true"
+    class="h-1.5 w-full bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500"
+  >
+  </div>
+
+  <button
+    id="contact-modal-close"
+    type="button"
+    autofocus
+    aria-label="Cerrar"
+    class="absolute top-5 right-4 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border-2 border-white/20 bg-neutral-900/80 text-lg leading-none text-amber-50 transition-colors hover:border-orange-400 hover:text-orange-400 focus-visible:outline-2 focus-visible:outline-orange-400"
+  >
+    ✕
+  </button>
+
+  <div class="flex flex-col gap-6 p-6 sm:p-8 lg:p-10">
+    <header class="flex flex-col gap-2">
+      <h3
+        id="contact-modal-title"
+        class="font-orbitron text-xl font-bold tracking-wide text-white sm:text-2xl lg:text-3xl"
+      >
+        Contacto
+      </h3>
+      <p class="text-sm text-neutral-400 sm:text-base">
+        Construyamos algo memorable. Encontrame en cualquiera de estos lados:
+      </p>
+    </header>
+
+    <ul class="flex flex-col gap-3">
+      {
+        socials.map(({ label, url, icon, hoverClass }) => (
+          <li>
+            <a
+              href={url}
+              target={url.startsWith("mailto:") ? undefined : "_blank"}
+              rel={
+                url.startsWith("mailto:") ? undefined : "noopener noreferrer"
+              }
+              class:list={[
+                "flex items-center gap-4 rounded-md border-2 border-white/15 px-5 py-3 font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 sm:py-3.5 lg:text-lg",
+                hoverClass,
+              ]}
+            >
+              <img
+                src={icon}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                decoding="async"
+                class="h-6 w-6 lg:h-7 lg:w-7"
+              />
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</dialog>
+
+<script>
+  function initContactModal(): void {
+    const modal = document.getElementById(
+      "contactModal",
+    ) as HTMLDialogElement | null;
+    if (!modal) return;
+
+    document
+      .getElementById("contact-modal-close")
+      ?.addEventListener("click", () => modal.close());
+
+    modal.addEventListener("click", (e: MouseEvent) => {
+      if (e.target === modal) modal.close();
+    });
+  }
+
+  document.addEventListener("astro:page-load", initContactModal);
+</script>

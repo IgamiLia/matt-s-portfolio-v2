@@ -1,11 +1,139 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/hero/Hero.astro";
+import HeroAbout from "@components/about/HeroAbout.astro";
+import FooterAbout from "@components/about/FooterAbout.astro";
+import FeaturedSection from "@sections/FeaturedSection.astro";
+import ProjectModal from "@components/ProjectModal.astro";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout
+  title="Matt - Desarrollador Web"
+  description="Bienvenido a mi portafolio personal. Soy un desarrollador web apasionado por crear experiencias digitales únicas y funcionales. Explora mis proyectos y habilidades para conocer más sobre mi trabajo."
+>
+  <Hero />
+  <HeroAbout />
+  <FeaturedSection />
+  <ProjectModal />
+  <FooterAbout />
+</BaseLayout>
+
+<script>
+  import type { Project } from "@/types";
+
+  const MORPH_NAME = "project-morph";
+
+  function initProjectModal(): void {
+    const modal = document.getElementById("projectModal") as HTMLDialogElement | null;
+    if (!modal) return;
+
+    const modalImage = document.getElementById("modal-image") as HTMLImageElement;
+    const modalTitle = document.getElementById("modal-title") as HTMLHeadingElement;
+    const modalTechnologies = document.getElementById("modal-technologies") as HTMLDivElement;
+    const modalDescription = document.getElementById("modal-description") as HTMLParagraphElement;
+    const closeButton = document.getElementById("modal-close") as HTMLButtonElement;
+    const demoButton = document.getElementById("modal-demo") as HTMLButtonElement;
+    const githubButton = document.getElementById("modal-github") as HTMLButtonElement;
+
+    let currentProject: Project | null = null;
+    let currentCard: HTMLElement | null = null;
+
+    function fillAndShow(project: Project): void {
+      modalImage.src = project.image;
+      modalImage.alt = project.title;
+      modalTitle.textContent = project.title;
+      modalDescription.textContent = project.description;
+
+      modalTechnologies.replaceChildren(
+        ...project.technologies.map((tech) => {
+          const span = document.createElement("span");
+          span.textContent = tech;
+          return span;
+        }),
+      );
+
+      modal!.showModal();
+    }
+
+    function openModal(project: Project, card: HTMLElement): void {
+      currentProject = project;
+      currentCard = card;
+
+      // Fallback: navegadores sin View Transitions API
+      if (!document.startViewTransition) {
+        fillAndShow(project);
+        return;
+      }
+
+      // Snapshot "antes": la card completa tiene el nombre
+      card.style.viewTransitionName = MORPH_NAME;
+
+      const transition = document.startViewTransition(() => {
+        // Snapshot "después": el nombre pasa a la modal → la card se expande
+        card.style.viewTransitionName = "";
+        modal!.style.viewTransitionName = MORPH_NAME;
+        fillAndShow(project);
+      });
+
+      transition.finished.finally(() => {
+        modal!.style.viewTransitionName = "";
+      });
+    }
+
+    function closeModal(): void {
+      if (!document.startViewTransition || !currentCard) {
+        modal!.close();
+        return;
+      }
+
+      modal!.style.viewTransitionName = MORPH_NAME;
+
+      const transition = document.startViewTransition(() => {
+        modal!.style.viewTransitionName = "";
+        currentCard!.style.viewTransitionName = MORPH_NAME;
+        modal!.close();
+      });
+
+      transition.finished.finally(() => {
+        if (currentCard) currentCard.style.viewTransitionName = "";
+      });
+    }
+
+    document.querySelectorAll<HTMLElement>("[data-project]").forEach((card) => {
+      card.addEventListener("click", () => {
+        openModal(JSON.parse(card.dataset.project!), card);
+      });
+
+      card.addEventListener("keydown", (e: KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openModal(JSON.parse(card.dataset.project!), card);
+        }
+      });
+    });
+
+    closeButton.addEventListener("click", closeModal);
+
+    // Esc: interceptamos el cierre nativo para hacer el morph inverso
+    modal.addEventListener("cancel", (e: Event) => {
+      e.preventDefault();
+      closeModal();
+    });
+
+    demoButton.addEventListener("click", () => {
+      if (currentProject)
+        window.open(currentProject.demoUrl, "_blank", "noopener,noreferrer");
+    });
+
+    githubButton.addEventListener("click", () => {
+      if (currentProject)
+        window.open(currentProject.githubUrl, "_blank", "noopener,noreferrer");
+    });
+
+    modal.addEventListener("click", (e: MouseEvent) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  document.addEventListener("astro:page-load", initProjectModal);
+</script>

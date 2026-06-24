@@ -1,0 +1,34 @@
+---
+import { ClientRouter } from "astro:transitions";
+import Header from "@header/Header.astro";
+import Footer from "@footer/Footer.astro";
+import ContactModal from "@components/ContactModal.astro";
+import "@styles/global.css";
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="keywords"
+      content="Astro, Portfolio, Web Development, JavaScript, CSS, HTML, TypeScript, Desarrollador Web, Matt, Matias Aguirre"
+    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <ClientRouter />
+  </head>
+  <body data-theme="dark">
+    <Header />
+    <slot />
+    <Footer />
+    <ContactModal />
+    <script is:inline src="/utils/theme.ts"></script>
+  </body>
+</html>

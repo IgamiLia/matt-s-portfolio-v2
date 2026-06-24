@@ -1,0 +1,33 @@
+---
+import projects from "@data/projects.json";
+import ProjectList from "@projects/ProjectList.astro";
+import FixedBackground from "@ui/FixedBackground.astro";
+import LinkButton from "@ui/LinkButton.astro";
+---
+
+<section
+  id="projects"
+  aria-labelledby="featured-title"
+  class="relative w-full scroll-mt-20 overflow-hidden px-4 py-16 [clip-path:inset(0)] sm:px-6 sm:py-24 lg:px-8"
+>
+  <FixedBackground
+    image="/backgrounds/bg-projects.png"
+    imageMobile="/backgrounds/bg-projects-mobile.png"
+  />
+
+  <div class="mx-auto max-w-6xl">
+    <h2
+      id="featured-title"
+      class="font-orbitron mb-10 text-center text-3xl font-bold tracking-tight text-white uppercase [text-shadow:4px_4px_0_rgba(0,0,0,0.35)] sm:mb-14 sm:text-4xl"
+    >
+      Proyectos destacados
+    </h2>
+    <ProjectList projects={projects.slice(0, 4)} />
+
+    <div class="mt-10 text-center sm:mt-14">
+      <LinkButton href="/projects" class="lg:px-8 lg:py-3.5 lg:text-lg">
+        Ver más proyectos
+      </LinkButton>
+    </div>
+  </div>
+</section>

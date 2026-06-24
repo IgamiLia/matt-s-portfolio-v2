@@ -1,0 +1,59 @@
+<dialog
+  id="projectModal"
+  aria-labelledby="modal-title"
+  class="m-auto w-[90vw] max-w-lg md:max-w-2xl lg:max-w-3xl overflow-hidden rounded-lg border-2 border-white/10 bg-neutral-900 p-0 text-amber-50 opacity-0 shadow-[8px_8px_0_rgba(0,0,0,0.45)] transition-[opacity,overlay,display] transition-discrete duration-200 ease-out open:opacity-100 starting:open:opacity-0 backdrop:bg-black/70 backdrop:opacity-0 backdrop:backdrop-blur-sm backdrop:transition-[opacity,overlay,display] backdrop:transition-discrete backdrop:duration-200 open:backdrop:opacity-100 starting:open:backdrop:opacity-0"
+>
+  <img
+    id="modal-image"
+    src=""
+    alt=""
+    class="aspect-video w-full object-cover"
+  />
+
+  <button
+    id="modal-close"
+    type="button"
+    autofocus
+    aria-label="Cerrar"
+    class="absolute top-3 right-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border-2 border-white/20 bg-neutral-900/80 text-lg leading-none text-amber-50 transition-colors hover:border-orange-400 hover:text-orange-400 focus-visible:outline-2 focus-visible:outline-orange-400"
+  >
+    ✕
+  </button>
+
+  <div class="flex flex-col gap-4 p-6 lg:gap-5 lg:p-8">
+    <h3
+      id="modal-title"
+      class="font-orbitron text-xl font-bold tracking-wide text-white sm:text-2xl lg:text-3xl"
+    >
+    </h3>
+
+    <div
+      id="modal-technologies"
+      class="flex flex-wrap gap-2 [&>span]:rounded-full [&>span]:border [&>span]:border-orange-400/40 [&>span]:bg-orange-500/15 [&>span]:px-3 [&>span]:py-1 [&>span]:font-mono [&>span]:text-xs [&>span]:text-orange-300"
+    >
+    </div>
+
+    <p
+      id="modal-description"
+      class="text-sm leading-relaxed text-pretty text-neutral-300 sm:text-base lg:text-lg"
+    >
+    </p>
+
+    <div class="mt-2 flex gap-3">
+      <button
+        id="modal-demo"
+        type="button"
+        class="flex-1 cursor-pointer rounded-md bg-orange-500 px-4 py-2.5 font-semibold text-neutral-950 shadow-[3px_3px_0_rgba(0,0,0,0.35)] transition-colors hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+      >
+        Ver demo
+      </button>
+      <button
+        id="modal-github"
+        type="button"
+        class="flex-1 cursor-pointer rounded-md border-2 border-white/20 bg-transparent px-4 py-2.5 font-semibold text-amber-50 shadow-[3px_3px_0_rgba(0,0,0,0.35)] transition-colors hover:border-orange-400 hover:text-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+      >
+        Ver en GitHub
+      </button>
+    </div>
+  </div>
+</dialog>

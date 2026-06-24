@@ -1,0 +1,34 @@
+---
+interface Props {
+  image: string;
+  imageMobile?: string;
+  /** background-position en desktop, ej: "center 62%" */
+  position?: string;
+  /** background-position en mobile (default: igual que position) */
+  positionMobile?: string;
+  class?: string;
+}
+
+const {
+  image,
+  imageMobile,
+  position = "center",
+  positionMobile,
+  class: className,
+} = Astro.props;
+---
+
+<div
+  aria-hidden="true"
+  class:list={[
+    "fixed top-0 left-0 -z-10 w-screen h-[var(--fb-h,100vh)]",
+    "bg-[image:var(--bg-mobile)] md:bg-[image:var(--bg-desktop)]",
+    "bg-[position:var(--bg-pos-mobile)] md:bg-[position:var(--bg-pos-desktop)]",
+    "bg-cover bg-no-repeat",
+    "transform-gpu backface-hidden will-change-transform",
+    "brightness-[0.7]",
+    className,
+  ]}
+  style={`--bg-mobile: url(${imageMobile ?? image}); --bg-desktop: url(${image}); --bg-pos-mobile: ${positionMobile ?? position}; --bg-pos-desktop: ${position}`}
+>
+</div>

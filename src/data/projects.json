@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "slug": "pixel-dash",
+    "title": "Pixel Dash",
+    "description": "Juego arcade retro construido con Canvas API y TypeScript. Incluye sistema de puntuación, niveles progresivos y efectos de sonido generados con Web Audio API.",
+    "image": "/kxov0rcoi4p21.png",
+    "technologies": ["TypeScript", "Canvas API", "Web Audio API"],
+    "demoUrl": "https://pixel-dash.vercel.app",
+    "githubUrl": "https://github.com/matt-dev/pixel-dash"
+  },
+  {
+    "id": 2,
+    "slug": "devnotes",
+    "title": "DevNotes",
+    "description": "Aplicación de notas para desarrolladores con resaltado de sintaxis, soporte Markdown y modo offline mediante Service Workers.",
+    "image": "/kxov0rcoi4p21.png",
+    "technologies": ["Astro", "TypeScript", "Tailwind CSS"],
+    "demoUrl": "https://devnotes-app.netlify.app",
+    "githubUrl": "https://github.com/matt-dev/devnotes"
+  },
+  {
+    "id": 3,
+    "slug": "weatherly",
+    "title": "Weatherly",
+    "description": "Dashboard del clima con visualizaciones animadas según las condiciones meteorológicas. Consume la API de OpenWeather con geolocalización del navegador.",
+    "image": "/kxov0rcoi4p21.png",
+    "technologies": ["JavaScript", "CSS", "REST API"],
+    "demoUrl": "https://weatherly-dash.vercel.app",
+    "githubUrl": "https://github.com/matt-dev/weatherly"
+  },
+  {
+    "id": 4,
+    "slug": "taskflow",
+    "title": "TaskFlow",
+    "description": "Gestor de tareas estilo kanban con drag and drop nativo, persistencia local y atajos de teclado para usuarios avanzados.",
+    "image": "/kxov0rcoi4p21.png",
+    "technologies": ["TypeScript", "HTML5", "CSS"],
+    "demoUrl": "https://taskflow-kanban.netlify.app",
+    "githubUrl": "https://github.com/matt-dev/taskflow"
+  },
+  {
+    "id": 5,
+    "slug": "cinemate",
+    "title": "CineMate",
+    "description": "Buscador de películas con recomendaciones personalizadas, listas de favoritos y trailers integrados usando la API de TMDB.",
+    "image": "/kxov0rcoi4p21.png",
+    "technologies": ["Astro", "JavaScript", "REST API"],
+    "demoUrl": "https://cinemate-app.vercel.app",
+    "githubUrl": "https://github.com/matt-dev/cinemate"
+  },
+  {
+    "id": 6,
+    "slug": "typebeat",
+    "title": "TypeBeat",
+    "description": "Test de mecanografía con métricas en tiempo real (WPM, precisión), gráficos de progreso y ranking de sesiones.",
+    "image": "/kxov0rcoi4p21.png",
+    "technologies": ["TypeScript", "Chart.js", "CSS"],
+    "demoUrl": "https://typebeat-test.netlify.app",
+    "githubUrl": "https://github.com/matt-dev/typebeat"
+  },
+  {
+    "id": 7,
+    "slug": "recetario",
+    "title": "Recetario",
+    "description": "Recetario interactivo con filtros por ingredientes, tiempos de cocción y modo paso a paso con temporizadores integrados.",
+    "image": "/kxov0rcoi4p21.png",
+    "technologies": ["Astro", "Tailwind CSS", "TypeScript"],
+    "demoUrl": "https://recetario-web.vercel.app",
+    "githubUrl": "https://github.com/matt-dev/recetario"
+  },
+  {
+    "id": 8,
+    "slug": "soundscape",
+    "title": "SoundScape",
+    "description": "Generador de paisajes sonoros ambientales con mezclador de pistas, visualizador de audio y presets guardables.",
+    "image": "/kxov0rcoi4p21.png",
+    "technologies": ["JavaScript", "Web Audio API", "CSS"],
+    "demoUrl": "https://soundscape-mixer.netlify.app",
+    "githubUrl": "https://github.com/matt-dev/soundscape"
+  }
+]
