@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import MoreProjectsSection from "@projects/MoreProjectsSection.astro";
+import ProjectModal from "@components/ProjectModal.astro";
+import SectionDivider from "@ui/SectionDivider.astro";
 import projects from "@data/projects.json";
 ---
 
@@ -9,4 +11,6 @@ import projects from "@data/projects.json";
   description="Explora todos mis proyectos de desarrollo web: aplicaciones, juegos y experimentos construidos con Astro, TypeScript y tecnologías modernas."
 >
   <MoreProjectsSection projects={projects.slice(4)} />
+  <SectionDivider />
+  <ProjectModal />
 </BaseLayout>

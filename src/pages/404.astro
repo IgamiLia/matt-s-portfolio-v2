@@ -2,6 +2,7 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import FixedBackground from "@ui/FixedBackground.astro";
 import PixelButton from "@ui/PixelButton.astro";
+import SectionDivider from "@ui/SectionDivider.astro";
 ---
 
 <BaseLayout
@@ -20,7 +21,7 @@ import PixelButton from "@ui/PixelButton.astro";
     </p>
 
     <h1
-      class="font-orbitron text-8xl font-black tracking-tighter text-white uppercase [text-shadow:5px_5px_0_rgba(0,0,0,0.45)] sm:text-9xl"
+      class="font-orbitron text-8xl font-black tracking-tighter text-white uppercase [text-shadow:-5px_5px_0_rgba(0,0,0,0.45)] sm:text-9xl"
     >
       404
     </h1>
@@ -35,16 +36,8 @@ import PixelButton from "@ui/PixelButton.astro";
       La ruta que buscas no existe o fue movida. Volvamos a terreno conocido.
     </p>
 
-    <PixelButton href="/" class="mt-8">
-      Volver al inicio
-    </PixelButton>
-
-    {/* Degradado divisorio: disuelve la imagen del 404 hacia el fondo
-        del sitio para evitar el corte brusco contra el footer */}
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-neutral-900"
-    >
-    </div>
+    <PixelButton href="/" class="mt-8"> Volver al inicio </PixelButton>
   </main>
+
+  <SectionDivider />
 </BaseLayout>

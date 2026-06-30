@@ -6,6 +6,9 @@ interface Props {
 }
 
 const { project } = Astro.props;
+
+const isLocal = project.image.startsWith("/");
+const base = project.image.replace(/\.(png|jpe?g)$/i, "");
 ---
 
 <article
@@ -13,16 +16,28 @@ const { project } = Astro.props;
   role="button"
   tabindex="0"
   aria-haspopup="dialog"
-  class="group cursor-pointer overflow-hidden rounded-lg border-2 border-white/10 bg-neutral-900/90 shadow-[6px_6px_0_rgba(0,0,0,0.35)] transition-colors duration-300 hover:border-orange-400/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+  class="group cursor-pointer overflow-hidden rounded-lg border-2 border-white/10 bg-neutral-900/90 shadow-[-6px_6px_0_rgba(0,0,0,0.35)] transition-colors duration-300 hover:border-orange-400/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
 >
-  <div class="overflow-hidden">
-    <img
-      src={project.image}
-      alt={project.title}
-      loading="lazy"
-      decoding="async"
-      class="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105"
-    />
+  <div class="aspect-video overflow-hidden">
+    <picture class="contents">
+      {
+        isLocal && (
+          <>
+            <source srcset={`${base}.avif`} type="image/avif" />
+            <source srcset={`${base}.webp`} type="image/webp" />
+          </>
+        )
+      }
+      <img
+        src={project.image}
+        alt={project.title}
+        width="1280"
+        height="720"
+        loading="lazy"
+        decoding="async"
+        class="block h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+      />
+    </picture>
   </div>
   <h3
     class="font-orbitron px-4 py-3 text-center text-sm font-semibold tracking-wide text-amber-50 sm:text-base lg:py-4 lg:text-lg"

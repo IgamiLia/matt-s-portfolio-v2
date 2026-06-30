@@ -1,0 +1,29 @@
+---
+interface Props {
+  color?: string;
+  height?: number;
+  tooth?: number;
+  depth?: number;
+  class?: string;
+}
+
+const {
+  color = "#171717",
+  height = 44,
+  tooth = 28,
+  depth = 12,
+  class: className,
+} = Astro.props;
+
+const path = `M0 ${depth} L${tooth / 2} 0 L${tooth} ${depth} L${tooth} ${height - depth} L${tooth / 2} ${height} L0 ${height - depth} Z`;
+const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${tooth}' height='${height}' shape-rendering='crispEdges'><path d='${path}' fill='${color}'/></svg>`;
+const bg = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+const half = height / 2;
+---
+
+<div
+  aria-hidden="true"
+  class:list={["pointer-events-none relative z-10 w-full shrink-0", className]}
+  style={`height:${height}px; margin-top:-${half}px; margin-bottom:-${half}px; background:${bg} repeat-x center / ${tooth}px ${height}px;`}
+>
+</div>

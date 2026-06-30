@@ -16,7 +16,6 @@ body:has(dialog[open]) {
   overflow: hidden;
 }
 
-/* Scroll suave para la navegación por anclas (respeta reduced motion) */
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
@@ -26,4 +25,21 @@ body:has(dialog[open]) {
 ::view-transition-group(project-morph) {
   animation-duration: 350ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

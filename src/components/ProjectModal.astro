@@ -1,13 +1,13 @@
 <dialog
   id="projectModal"
   aria-labelledby="modal-title"
-  class="m-auto w-[90vw] max-w-lg md:max-w-2xl lg:max-w-3xl overflow-hidden rounded-lg border-2 border-white/10 bg-neutral-900 p-0 text-amber-50 opacity-0 shadow-[8px_8px_0_rgba(0,0,0,0.45)] transition-[opacity,overlay,display] transition-discrete duration-200 ease-out open:opacity-100 starting:open:opacity-0 backdrop:bg-black/70 backdrop:opacity-0 backdrop:backdrop-blur-sm backdrop:transition-[opacity,overlay,display] backdrop:transition-discrete backdrop:duration-200 open:backdrop:opacity-100 starting:open:backdrop:opacity-0"
+  class="m-auto w-[90vw] max-w-lg md:max-w-2xl lg:max-w-3xl overflow-hidden rounded-lg border-2 border-white/10 bg-neutral-900 p-0 text-amber-50 opacity-0 shadow-[-8px_8px_0_rgba(0,0,0,0.45)] transition-[opacity,overlay,display] transition-discrete duration-200 ease-out open:opacity-100 starting:open:opacity-0 backdrop:bg-black/70 backdrop:opacity-0 backdrop:backdrop-blur-sm backdrop:transition-[opacity,overlay,display] backdrop:transition-discrete backdrop:duration-200 open:backdrop:opacity-100 starting:open:backdrop:opacity-0"
 >
   <img
     id="modal-image"
     src=""
     alt=""
-    class="aspect-video w-full object-cover"
+    class="aspect-video w-full object-cover object-center"
   />
 
   <button
@@ -43,17 +43,135 @@
       <button
         id="modal-demo"
         type="button"
-        class="flex-1 cursor-pointer rounded-md bg-orange-500 px-4 py-2.5 font-semibold text-neutral-950 shadow-[3px_3px_0_rgba(0,0,0,0.35)] transition-colors hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+        class="flex-1 cursor-pointer rounded-md bg-orange-500 px-4 py-2.5 font-semibold text-neutral-950 shadow-[-3px_3px_0_rgba(0,0,0,0.35)] transition-colors hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
       >
         Ver demo
       </button>
       <button
         id="modal-github"
         type="button"
-        class="flex-1 cursor-pointer rounded-md border-2 border-white/20 bg-transparent px-4 py-2.5 font-semibold text-amber-50 shadow-[3px_3px_0_rgba(0,0,0,0.35)] transition-colors hover:border-orange-400 hover:text-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+        class="flex-1 cursor-pointer rounded-md border-2 border-white/20 bg-transparent px-4 py-2.5 font-semibold text-amber-50 shadow-[-3px_3px_0_rgba(0,0,0,0.35)] transition-colors hover:border-orange-400 hover:text-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
       >
         Ver en GitHub
       </button>
     </div>
   </div>
 </dialog>
+
+<script>
+  import type { Project } from "@/types";
+
+  const MORPH_NAME = "project-morph";
+
+  function initProjectModal(): void {
+    const modal = document.getElementById("projectModal") as HTMLDialogElement | null;
+    if (!modal) return;
+
+    const modalImage = document.getElementById("modal-image") as HTMLImageElement;
+    const modalTitle = document.getElementById("modal-title") as HTMLHeadingElement;
+    const modalTechnologies = document.getElementById("modal-technologies") as HTMLDivElement;
+    const modalDescription = document.getElementById("modal-description") as HTMLParagraphElement;
+    const closeButton = document.getElementById("modal-close") as HTMLButtonElement;
+    const demoButton = document.getElementById("modal-demo") as HTMLButtonElement;
+    const githubButton = document.getElementById("modal-github") as HTMLButtonElement;
+
+    let currentProject: Project | null = null;
+    let currentCard: HTMLElement | null = null;
+
+    function fillAndShow(project: Project): void {
+      modalImage.src = project.image.startsWith("/")
+        ? project.image.replace(/\.(png|jpe?g)$/i, ".webp")
+        : project.image;
+      modalImage.alt = project.title;
+      modalTitle.textContent = project.title;
+      modalDescription.textContent = project.description;
+
+      modalTechnologies.replaceChildren(
+        ...project.technologies.map((tech) => {
+          const span = document.createElement("span");
+          span.textContent = tech;
+          return span;
+        }),
+      );
+
+      modal!.showModal();
+    }
+
+    function openModal(project: Project, card: HTMLElement): void {
+      currentProject = project;
+      currentCard = card;
+
+      if (!document.startViewTransition) {
+        fillAndShow(project);
+        return;
+      }
+
+      card.style.viewTransitionName = MORPH_NAME;
+
+      const transition = document.startViewTransition(() => {
+        card.style.viewTransitionName = "";
+        modal!.style.viewTransitionName = MORPH_NAME;
+        fillAndShow(project);
+      });
+
+      transition.finished.finally(() => {
+        modal!.style.viewTransitionName = "";
+      });
+    }
+
+    function closeModal(): void {
+      if (!document.startViewTransition || !currentCard) {
+        modal!.close();
+        return;
+      }
+
+      modal!.style.viewTransitionName = MORPH_NAME;
+
+      const transition = document.startViewTransition(() => {
+        modal!.style.viewTransitionName = "";
+        currentCard!.style.viewTransitionName = MORPH_NAME;
+        modal!.close();
+      });
+
+      transition.finished.finally(() => {
+        if (currentCard) currentCard.style.viewTransitionName = "";
+      });
+    }
+
+    document.querySelectorAll<HTMLElement>("[data-project]").forEach((card) => {
+      card.addEventListener("click", () => {
+        openModal(JSON.parse(card.dataset.project!), card);
+      });
+
+      card.addEventListener("keydown", (e: KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openModal(JSON.parse(card.dataset.project!), card);
+        }
+      });
+    });
+
+    closeButton.addEventListener("click", closeModal);
+
+    modal.addEventListener("cancel", (e: Event) => {
+      e.preventDefault();
+      closeModal();
+    });
+
+    demoButton.addEventListener("click", () => {
+      if (currentProject)
+        window.open(currentProject.demoUrl, "_blank", "noopener,noreferrer");
+    });
+
+    githubButton.addEventListener("click", () => {
+      if (currentProject)
+        window.open(currentProject.githubUrl, "_blank", "noopener,noreferrer");
+    });
+
+    modal.addEventListener("click", (e: MouseEvent) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  document.addEventListener("astro:page-load", initProjectModal);
+</script>
