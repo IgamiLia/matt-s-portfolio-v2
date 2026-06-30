@@ -1,6 +1,8 @@
 ---
 import type { Project } from "@/types";
 import ProjectList from "@projects/ProjectList.astro";
+import FixedBackground from "@ui/FixedBackground.astro";
+import PixelButton from "@ui/PixelButton.astro";
 
 interface Props {
   projects: Project[];
@@ -9,7 +11,27 @@ interface Props {
 const { projects } = Astro.props;
 ---
 
-<section aria-labelledby="more-projects-title">
-  <h2 id="more-projects-title">Más proyectos</h2>
-  <ProjectList projects={projects} />
+<section
+  aria-labelledby="more-projects-title"
+  class="relative flex min-h-screen w-full flex-col justify-center overflow-hidden px-4 py-16 [clip-path:inset(0)] sm:px-6 sm:py-24 lg:px-8"
+>
+  <FixedBackground
+    image="/backgrounds/bg-projects.png"
+    imageMobile="/backgrounds/bg-projects-mobile.png"
+  />
+
+  <div class="mx-auto w-full max-w-6xl">
+    <h2
+      id="more-projects-title"
+      class="font-orbitron mb-10 text-center text-3xl font-bold tracking-tight text-white uppercase [text-shadow:-4px_4px_0_rgba(0,0,0,0.35)] sm:mb-14 sm:text-4xl"
+    >
+      Más proyectos
+    </h2>
+
+    <ProjectList projects={projects} />
+
+    <div class="mt-10 text-center sm:mt-14">
+      <PixelButton href="/" class="lg:text-lg"> Volver al inicio </PixelButton>
+    </div>
+  </div>
 </section>

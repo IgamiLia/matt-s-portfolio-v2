@@ -1,0 +1,50 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import FixedBackground from "@ui/FixedBackground.astro";
+import PixelButton from "@ui/PixelButton.astro";
+---
+
+<BaseLayout
+  title="404 - Página no encontrada | Matt"
+  description="La página que buscas no existe o fue movida. Vuelve al inicio para seguir explorando el portafolio de Matt."
+>
+  <main
+    class="relative -mt-20 flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-6 text-center [--fb-h:100vh]"
+  >
+    <FixedBackground image="/backgrounds/bg-header.png" position="center" />
+
+    <p
+      class="font-orbitron text-sm font-semibold tracking-[0.4em] text-orange-400 uppercase sm:text-base"
+    >
+      Error
+    </p>
+
+    <h1
+      class="font-orbitron text-8xl font-black tracking-tighter text-white uppercase [text-shadow:5px_5px_0_rgba(0,0,0,0.45)] sm:text-9xl"
+    >
+      404
+    </h1>
+
+    <h2
+      class="mt-2 text-xl font-bold tracking-tight text-amber-50 uppercase sm:text-2xl"
+    >
+      Página no encontrada
+    </h2>
+
+    <p class="mt-4 max-w-md text-balance text-sm text-neutral-300 sm:text-base">
+      La ruta que buscas no existe o fue movida. Volvamos a terreno conocido.
+    </p>
+
+    <PixelButton href="/" class="mt-8">
+      Volver al inicio
+    </PixelButton>
+
+    {/* Degradado divisorio: disuelve la imagen del 404 hacia el fondo
+        del sitio para evitar el corte brusco contra el footer */}
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-neutral-900"
+    >
+    </div>
+  </main>
+</BaseLayout>

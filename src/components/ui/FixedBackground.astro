@@ -16,6 +16,19 @@ const {
   positionMobile,
   class: className,
 } = Astro.props;
+
+/**
+ * Genera un valor `image-set()` con AVIF y WebP (negociados por el navegador
+ * mediante el type hint, sin descargar el que no soporta) y el PNG original
+ * como fallback final. Asume que los .avif/.webp viven junto al .png.
+ */
+const toSet = (png: string) => {
+  const base = png.replace(/\.(png|jpe?g)$/i, "");
+  return `image-set(url("${base}.avif") type("image/avif"), url("${base}.webp") type("image/webp"), url("${png}") type("image/png"))`;
+};
+
+const desktopSet = toSet(image);
+const mobileSet = toSet(imageMobile ?? image);
 ---
 
 <div
@@ -29,6 +42,6 @@ const {
     "brightness-[0.7]",
     className,
   ]}
-  style={`--bg-mobile: url(${imageMobile ?? image}); --bg-desktop: url(${image}); --bg-pos-mobile: ${positionMobile ?? position}; --bg-pos-desktop: ${position}`}
+  style={`--bg-mobile: ${mobileSet}; --bg-desktop: ${desktopSet}; --bg-pos-mobile: ${positionMobile ?? position}; --bg-pos-desktop: ${position}`}
 >
 </div>

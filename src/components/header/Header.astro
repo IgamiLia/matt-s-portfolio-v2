@@ -46,7 +46,6 @@ const links = [
     );
     if (!links.length) return;
 
-    // Resalta el link de la sección visible en el viewport
     const sections = [...links]
       .map((link) => document.getElementById(link.dataset.section!))
       .filter((section): section is HTMLElement => section !== null);

@@ -1,82 +1,52 @@
 [
   {
     "id": 1,
-    "slug": "pixel-dash",
-    "title": "Pixel Dash",
-    "description": "Juego arcade retro construido con Canvas API y TypeScript. Incluye sistema de puntuación, niveles progresivos y efectos de sonido generados con Web Audio API.",
-    "image": "/kxov0rcoi4p21.png",
-    "technologies": ["TypeScript", "Canvas API", "Web Audio API"],
-    "demoUrl": "https://pixel-dash.vercel.app",
-    "githubUrl": "https://github.com/matt-dev/pixel-dash"
+    "slug": "maria-hairstyle",
+    "title": "María Hairstyle",
+    "description": "Sitio web de María Iturria, estilista de Malvinas Argentinas, donde se presentan sus servicios, lista de precios, información de contacto y trayectoria profesional de forma clara y accesible.",
+    "image": "https://raw.githubusercontent.com/IgamiLia/matt-s-portfolio/main/Images/maria-hairstyle.png",
+    "technologies": ["Astro", "CSS", "JavaScript"],
+    "demoUrl": "https://mariahairstyle.com/",
+    "githubUrl": "https://github.com/IgamiLia/maria-hairstyle"
   },
   {
     "id": 2,
-    "slug": "devnotes",
-    "title": "DevNotes",
-    "description": "Aplicación de notas para desarrolladores con resaltado de sintaxis, soporte Markdown y modo offline mediante Service Workers.",
-    "image": "/kxov0rcoi4p21.png",
-    "technologies": ["Astro", "TypeScript", "Tailwind CSS"],
-    "demoUrl": "https://devnotes-app.netlify.app",
-    "githubUrl": "https://github.com/matt-dev/devnotes"
+    "slug": "ailen-portfolio",
+    "title": "Ailen Portfolio",
+    "description": "Portfolio personal de Ailen Braga, donde se exhiben sus proyectos de diseño gráfico, ilustración y arte digital, con una navegación intuitiva y un diseño visualmente atractivo que resalta su creatividad y habilidades artísticas.",
+    "image": "https://raw.githubusercontent.com/IgamiLia/matt-s-portfolio/main/Images/ailen_portfolio.png",
+    "technologies": ["Astro", "Tailwind CSS", "TypeScript"],
+    "demoUrl": "https://ailenbraga.com/",
+    "githubUrl": "https://github.com/IgamiLia/Portfolio-web-Ailen"
   },
   {
     "id": 3,
-    "slug": "weatherly",
-    "title": "Weatherly",
-    "description": "Dashboard del clima con visualizaciones animadas según las condiciones meteorológicas. Consume la API de OpenWeather con geolocalización del navegador.",
-    "image": "/kxov0rcoi4p21.png",
-    "technologies": ["JavaScript", "CSS", "REST API"],
-    "demoUrl": "https://weatherly-dash.vercel.app",
-    "githubUrl": "https://github.com/matt-dev/weatherly"
+    "slug": "valheim-tesis",
+    "title": "Valheim Tesis",
+    "description": "Página de personajes de la webserie Valheim: Larga vida a La Reina, desarrollada como parte de la tesis de grado en Artes Digitales de la Universidad Nacional de Quilmes (UNQ), donde se presentan los personajes principales con sus biografías, características y roles dentro de la narrativa.",
+    "image": "https://raw.githubusercontent.com/IgamiLia/matt-s-portfolio/main/Images/valheim_characters.png",
+    "technologies": ["Astro", "CSS", "JavaScript"],
+    "demoUrl": "https://valheim-tesis.vercel.app/characters/index.html",
+    "githubUrl": "https://github.com/IgamiLia/valheim-tesis-characters"
   },
   {
     "id": 4,
-    "slug": "taskflow",
-    "title": "TaskFlow",
-    "description": "Gestor de tareas estilo kanban con drag and drop nativo, persistencia local y atajos de teclado para usuarios avanzados.",
-    "image": "/kxov0rcoi4p21.png",
-    "technologies": ["TypeScript", "HTML5", "CSS"],
-    "demoUrl": "https://taskflow-kanban.netlify.app",
-    "githubUrl": "https://github.com/matt-dev/taskflow"
+    "slug": "cafe-central",
+    "title": "Café Central",
+    "description": "Template de menú para cafetería desarrollado con HTML5, CSS y JavaScript. Interfaz moderna y responsive que muestra de forma clara los productos de \"Café Central\", con especialidad en pastelería artesanal.",
+    "image": "https://raw.githubusercontent.com/IgamiLia/matt-s-portfolio/main/Images/menu-template.png",
+    "technologies": ["HTML5", "CSS", "JavaScript"],
+    "demoUrl": "https://menu-template-wheat.vercel.app/",
+    "githubUrl": "https://github.com/IgamiLia/menu-template"
   },
   {
     "id": 5,
-    "slug": "cinemate",
-    "title": "CineMate",
-    "description": "Buscador de películas con recomendaciones personalizadas, listas de favoritos y trailers integrados usando la API de TMDB.",
-    "image": "/kxov0rcoi4p21.png",
-    "technologies": ["Astro", "JavaScript", "REST API"],
-    "demoUrl": "https://cinemate-app.vercel.app",
-    "githubUrl": "https://github.com/matt-dev/cinemate"
-  },
-  {
-    "id": 6,
-    "slug": "typebeat",
-    "title": "TypeBeat",
-    "description": "Test de mecanografía con métricas en tiempo real (WPM, precisión), gráficos de progreso y ranking de sesiones.",
-    "image": "/kxov0rcoi4p21.png",
-    "technologies": ["TypeScript", "Chart.js", "CSS"],
-    "demoUrl": "https://typebeat-test.netlify.app",
-    "githubUrl": "https://github.com/matt-dev/typebeat"
-  },
-  {
-    "id": 7,
-    "slug": "recetario",
-    "title": "Recetario",
-    "description": "Recetario interactivo con filtros por ingredientes, tiempos de cocción y modo paso a paso con temporizadores integrados.",
-    "image": "/kxov0rcoi4p21.png",
-    "technologies": ["Astro", "Tailwind CSS", "TypeScript"],
-    "demoUrl": "https://recetario-web.vercel.app",
-    "githubUrl": "https://github.com/matt-dev/recetario"
-  },
-  {
-    "id": 8,
-    "slug": "soundscape",
-    "title": "SoundScape",
-    "description": "Generador de paisajes sonoros ambientales con mezclador de pistas, visualizador de audio y presets guardables.",
-    "image": "/kxov0rcoi4p21.png",
-    "technologies": ["JavaScript", "Web Audio API", "CSS"],
-    "demoUrl": "https://soundscape-mixer.netlify.app",
-    "githubUrl": "https://github.com/matt-dev/soundscape"
+    "slug": "valheim-webserie",
+    "title": "Valheim Webserie",
+    "description": "Sinopsis oficial de la webserie Valheim: Larga vida a La Reina, presentada en el ámbito académico de la Universidad Nacional de Quilmes (UNQ), donde se aborda su propuesta narrativa, construcción estética y desarrollo conceptual.",
+    "image": "https://raw.githubusercontent.com/IgamiLia/matt-s-portfolio/main/Images/valheim-webserie.png",
+    "technologies": ["HTML5", "CSS"],
+    "demoUrl": "https://valheim-web-three.vercel.app/",
+    "githubUrl": "https://github.com/IgamiLia/ValheimWeb"
   }
 ]

@@ -16,14 +16,21 @@ import FixedBackground from "@ui/FixedBackground.astro";
   <div
     class="group absolute bottom-0 left-1/2 flex w-full -translate-x-1/2 items-end justify-center px-4 sm:px-6 lg:px-8"
   >
-    <img
-      src="/sprites/matt.png"
-      alt=""
-      aria-hidden="true"
-      class="absolute z-5 -mb-1 translate-x-[-50%] md:translate-x-[-65%] -mr-8 w-44 -rotate-3 drop-shadow-[0_8px_16px_rgba(0,0,0,0.45)] transition-transform duration-500 ease-in-out group-hover:translate-y-full sm:-mr-12 sm:w-60 md:-mr-16 md:w-80"
-    />
+    <picture class="contents">
+      <source srcset="/sprites/matt.avif" type="image/avif" />
+      <source srcset="/sprites/matt.webp" type="image/webp" />
+      <img
+        src="/sprites/matt.png"
+        alt=""
+        aria-hidden="true"
+        width="798"
+        height="800"
+        decoding="async"
+        class="absolute z-5 -mb-1 translate-x-[-50%] md:translate-x-[-65%] -mr-8 w-44 h-auto -rotate-3 drop-shadow-[0_8px_16px_rgba(0,0,0,0.45)] transition-transform duration-500 ease-in-out group-hover:translate-y-full sm:-mr-12 sm:w-60 md:-mr-16 md:w-80"
+      />
+    </picture>
     <h1
-      class="text-6xl font-black translate-x-15 md:translate-x-25 tracking-tighter text-white uppercase [text-shadow:5px_5px_0_rgba(0,0,0,0.35)] transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:scale-200 group-hover:translate-y-[-50%] sm:text-8xl lg:text-9xl"
+      class="text-6xl font-black translate-x-15 md:translate-x-25 tracking-tighter text-white uppercase [text-shadow:-5px_5px_0_rgba(0,0,0,0.35)] transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:scale-200 group-hover:translate-y-[-50%] sm:text-8xl lg:text-9xl"
     >
       MATT
     </h1>

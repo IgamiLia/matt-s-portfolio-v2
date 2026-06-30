@@ -2,7 +2,6 @@ export interface Social {
   label: string;
   url: string;
   icon: string;
-  /** Clases de hover con el color de marca de cada red */
   hoverClass: string;
 }
 
