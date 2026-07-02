@@ -4,7 +4,7 @@
     "slug": "maria-hairstyle",
     "title": "María Hairstyle",
     "description": "Sitio web de María Iturria, estilista de Malvinas Argentinas, donde se presentan sus servicios, lista de precios, información de contacto y trayectoria profesional de forma clara y accesible.",
-    "image": "/projects/maria-hairstyle.png",
+    "image": "/projects/png/maria-hairstyle.png",
     "technologies": ["Astro", "CSS", "JavaScript"],
     "demoUrl": "https://mariahairstyle.com/",
     "githubUrl": "https://github.com/IgamiLia/maria-hairstyle"
@@ -14,7 +14,7 @@
     "slug": "ailen-portfolio",
     "title": "Ailen Portfolio",
     "description": "Portfolio personal de Ailen Braga, donde se exhiben sus proyectos de diseño gráfico, ilustración y arte digital, con una navegación intuitiva y un diseño visualmente atractivo que resalta su creatividad y habilidades artísticas.",
-    "image": "/projects/ailen_portfolio.png",
+    "image": "/projects/png/ailen_portfolio.png",
     "technologies": ["Astro", "Tailwind CSS", "TypeScript"],
     "demoUrl": "https://ailenbraga.com/",
     "githubUrl": "https://github.com/IgamiLia/Portfolio-web-Ailen"
@@ -24,7 +24,7 @@
     "slug": "valheim-tesis",
     "title": "Valheim Tesis",
     "description": "Página de personajes de la webserie Valheim: Larga vida a La Reina, desarrollada como parte de la tesis de grado en Artes Digitales de la Universidad Nacional de Quilmes (UNQ), donde se presentan los personajes principales con sus biografías, características y roles dentro de la narrativa.",
-    "image": "/projects/valheim-tesis.png",
+    "image": "/projects/png/valheim-tesis.png",
     "technologies": ["Astro", "CSS", "JavaScript"],
     "demoUrl": "https://valheim-tesis.vercel.app/",
     "githubUrl": "https://github.com/IgamiLia/valheim-tesis"
@@ -34,7 +34,7 @@
     "slug": "cafe-central",
     "title": "Café Central",
     "description": "Template de menú para cafetería desarrollado con HTML5, CSS y JavaScript. Interfaz moderna y responsive que muestra de forma clara los productos de \"Café Central\", con especialidad en pastelería artesanal.",
-    "image": "/projects/menu-template.png",
+    "image": "/projects/png/menu-template.png",
     "technologies": ["HTML5", "CSS", "JavaScript"],
     "demoUrl": "https://menu-template-wheat.vercel.app/",
     "githubUrl": "https://github.com/IgamiLia/menu-template"
@@ -44,7 +44,7 @@
     "slug": "valheim-webserie",
     "title": "Valheim Webserie",
     "description": "Sinopsis oficial de la webserie Valheim: Larga vida a La Reina, presentada en el ámbito académico de la Universidad Nacional de Quilmes (UNQ), donde se aborda su propuesta narrativa, construcción estética y desarrollo conceptual.",
-    "image": "/projects/valheim-sinopsis.png",
+    "image": "/projects/png/valheim-sinopsis.png",
     "technologies": ["HTML5", "CSS"],
     "demoUrl": "https://valheim-web-three.vercel.app/",
     "githubUrl": "https://github.com/IgamiLia/ValheimWeb"
