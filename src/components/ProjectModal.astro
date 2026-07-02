@@ -80,7 +80,7 @@
 
     function fillAndShow(project: Project): void {
       modalImage.src = project.image.startsWith("/")
-        ? project.image.replace(/\.(png|jpe?g)$/i, ".webp")
+        ? project.image.replace("/png/", "/webp/").replace(/\.(png|jpe?g)$/i, ".webp")
         : project.image;
       modalImage.alt = project.title;
       modalTitle.textContent = project.title;

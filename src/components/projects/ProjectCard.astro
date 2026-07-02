@@ -8,7 +8,8 @@ interface Props {
 const { project } = Astro.props;
 
 const isLocal = project.image.startsWith("/");
-const base = project.image.replace(/\.(png|jpe?g)$/i, "");
+const avif = project.image.replace("/png/", "/avif/").replace(/\.(png|jpe?g)$/i, ".avif");
+const webp = project.image.replace("/png/", "/webp/").replace(/\.(png|jpe?g)$/i, ".webp");
 ---
 
 <article
@@ -23,8 +24,8 @@ const base = project.image.replace(/\.(png|jpe?g)$/i, "");
       {
         isLocal && (
           <>
-            <source srcset={`${base}.avif`} type="image/avif" />
-            <source srcset={`${base}.webp`} type="image/webp" />
+            <source srcset={avif} type="image/avif" />
+            <source srcset={webp} type="image/webp" />
           </>
         )
       }

@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from "@header/ThemeToggle.astro";
+
 const links = [
   { href: "/#home", label: "Home", section: "home" },
   { href: "/#projects", label: "Proyectos", section: "projects" },
@@ -11,10 +13,10 @@ const links = [
 >
   <nav
     aria-label="Navegación principal"
-    class="mx-auto flex h-20 max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8"
+    class="relative mx-auto flex h-20 max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8"
   >
     <ul
-      class="flex items-center justify-center gap-2 text-sm font-medium sm:gap-4 lg:gap-6"
+      class="flex items-center justify-center gap-1 text-sm font-medium sm:gap-4 lg:gap-6"
     >
       {
         links.map(({ href, label, section }) => (
@@ -22,7 +24,7 @@ const links = [
             <a
               href={href}
               data-section={section}
-              class="block rounded-md px-4 py-2 tracking-wide transition-colors duration-300 ease-in-out hover:bg-white/10 aria-[current=page]:bg-white/15 sm:px-6"
+              class="block rounded-md px-2 py-2 tracking-wide transition-colors duration-300 ease-in-out hover:bg-white/10 aria-[current=page]:bg-white/15 sm:px-6"
             >
               {label}
             </a>
@@ -33,10 +35,15 @@ const links = [
         <button
           id="contact-link"
           type="button"
-          class="block cursor-pointer rounded-md px-4 py-2 tracking-wide transition-colors duration-300 ease-in-out hover:bg-white/10 sm:px-6"
+          class="block cursor-pointer rounded-md px-2 py-2 tracking-wide transition-colors duration-300 ease-in-out hover:bg-white/10 sm:px-6"
         >
           Contacto
         </button>
+      </li>
+      <li>
+        <div class="block cursor-pointer rounded-md px-2 py-2">
+          <ThemeToggle />
+        </div>
       </li>
     </ul>
   </nav>

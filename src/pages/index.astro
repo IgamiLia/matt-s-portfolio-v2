@@ -12,20 +12,22 @@ import ProjectModal from "@components/ProjectModal.astro";
   description="Bienvenido al portafolio de Matías Aguirre, desarrollador web frontend de Buenos Aires. Explora proyectos hechos con Astro, JavaScript y TypeScript, enfocados en experiencias únicas y memorables."
 >
   <Fragment slot="head">
-    <link
-      rel="preload"
-      as="image"
-      href="/backgrounds/avif/bg-header.avif"
-      type="image/avif"
-      media="(min-width: 768px)"
-    />
-    <link
-      rel="preload"
-      as="image"
-      href="/backgrounds/avif/bg-header-mobile.avif"
-      type="image/avif"
-      media="(max-width: 767.98px)"
-    />
+    <!-- Preload theme-aware del hero: corre tras el script anti-FOUC del layout -->
+    <script is:inline>
+      (() => {
+        const dark = document.documentElement.dataset.theme === "dark";
+        const desktop = matchMedia("(min-width: 768px)").matches;
+        const base = dark
+          ? "/backgrounds/dark/avif/bg-hero-dark"
+          : "/backgrounds/avif/bg-header";
+        const link = document.createElement("link");
+        link.rel = "preload";
+        link.as = "image";
+        link.type = "image/avif";
+        link.href = `${base}${desktop ? "" : "-mobile"}.avif`;
+        document.head.append(link);
+      })();
+    </script>
   </Fragment>
 
   <Hero />

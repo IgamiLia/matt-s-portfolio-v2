@@ -1,0 +1,119 @@
+---
+const icons: Record<string, string> = {
+  light: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>`,
+  dark: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
+  system: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+};
+
+const options = [
+  { value: "light", label: "Light" },
+  { value: "dark", label: "Dark" },
+  { value: "system", label: "System" },
+];
+---
+
+<div id="theme-switcher" class="relative">
+  <button
+    id="theme-trigger"
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-label="Cambiar tema"
+    class="flex size-10 cursor-pointer items-center justify-center rounded-md transition-colors duration-300 ease-in-out hover:bg-white/10"
+  >
+    {
+      options.map(({ value }) => (
+        <span data-icon={value} class="hidden" set:html={icons[value]} />
+      ))
+    }
+  </button>
+
+  <ul
+    id="theme-menu"
+    role="menu"
+    aria-label="Tema"
+    hidden
+    class="absolute top-full right-0 mt-3 w-36 rounded-md border border-white/10 bg-neutral-950/90 p-1 shadow-lg backdrop-blur-md"
+  >
+    {
+      options.map(({ value, label }) => (
+        <li role="none">
+          <button
+            type="button"
+            role="menuitemradio"
+            aria-checked="false"
+            data-theme-option={value}
+            class="flex w-full cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-sm tracking-wide transition-colors duration-300 ease-in-out hover:bg-white/10 aria-checked:bg-white/15"
+          >
+            <span set:html={icons[value]} />
+            {label}
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  import { getTheme, setTheme, watchTheme, type Theme } from "@utils/theme";
+
+  function initThemeSwitcher(): void {
+    const root = document.getElementById("theme-switcher");
+    const trigger = document.getElementById("theme-trigger");
+    const menu = document.getElementById("theme-menu");
+    if (!root || !trigger || !menu) return;
+
+    const icons = trigger.querySelectorAll<HTMLElement>("[data-icon]");
+    const options =
+      menu.querySelectorAll<HTMLButtonElement>("[data-theme-option]");
+
+    const sync = (): void => {
+      const theme = getTheme();
+      icons.forEach((icon) =>
+        icon.classList.toggle("hidden", icon.dataset.icon !== theme),
+      );
+      options.forEach((opt) =>
+        opt.setAttribute(
+          "aria-checked",
+          String(opt.dataset.themeOption === theme),
+        ),
+      );
+    };
+
+    const close = (): void => {
+      menu.hidden = true;
+      trigger.setAttribute("aria-expanded", "false");
+    };
+
+    trigger.addEventListener("click", () => {
+      const willOpen = menu.hidden;
+      menu.hidden = !willOpen;
+      trigger.setAttribute("aria-expanded", String(willOpen));
+    });
+
+    options.forEach((opt) =>
+      opt.addEventListener("click", () => {
+        setTheme(opt.dataset.themeOption as Theme);
+        sync();
+        close();
+        trigger.focus();
+      }),
+    );
+
+    document.addEventListener("click", (e) => {
+      if (!menu.hidden && !root.contains(e.target as Node)) close();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menu.hidden) {
+        close();
+        trigger.focus();
+      }
+    });
+
+    watchTheme();
+    sync();
+  }
+
+  document.addEventListener("astro:page-load", initThemeSwitcher);
+</script>

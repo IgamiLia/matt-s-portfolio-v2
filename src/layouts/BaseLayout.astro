@@ -55,6 +55,24 @@ const jsonLd = {
     <meta name="theme-color" content="#171717" />
     <link rel="canonical" href={canonical} />
 
+    <!-- Anti-FOUC: aplica el tema antes del primer paint. Lógica completa en @utils/theme.ts -->
+    <script is:inline>
+      (() => {
+        const apply = () => {
+          const stored = localStorage.getItem("theme");
+          const dark =
+            stored === "dark" ||
+            (stored !== "light" &&
+              matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.dataset.theme = dark ? "dark" : "light";
+          if (dark) document.documentElement.dataset.darkReady = "";
+        };
+        apply();
+        // El swap del ClientRouter reemplaza los atributos de <html>
+        document.addEventListener("astro:after-swap", apply);
+      })();
+    </script>
+
     <link rel="icon" type="image/png" sizes="32x32" href="/png/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/png/favicon-16.png" />
     <link rel="apple-touch-icon" href="/png/apple-touch-icon.png" />
@@ -78,7 +96,7 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <ClientRouter />
   </head>
-  <body data-theme="dark">
+  <body>
     <Header />
     <slot />
     <Footer />

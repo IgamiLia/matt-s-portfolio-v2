@@ -5,6 +5,14 @@
   --font-orbitron: "Orbitron Variable", sans-serif;
 }
 
+/* La variante dark: se activa con data-theme="dark" en <html> (ver utils/theme.ts) */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Activa desde la primera vez que se entra en dark y no se quita más:
+   permite que la capa dark retenga su imagen al volver a light y el
+   cross-fade de salida sea suave (la imagen ya está cacheada). */
+@custom-variant dark-ready (&:where([data-dark-ready], [data-dark-ready] *));
+
 html {
   scrollbar-gutter: stable;
   scrollbar-width: thin;

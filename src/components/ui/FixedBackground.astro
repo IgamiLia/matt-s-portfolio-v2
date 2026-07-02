@@ -2,6 +2,8 @@
 interface Props {
   image: string;
   imageMobile?: string;
+  imageDark?: string;
+  imageMobileDark?: string;
   position?: string;
   positionMobile?: string;
   class?: string;
@@ -10,29 +12,61 @@ interface Props {
 const {
   image,
   imageMobile,
+  imageDark,
+  imageMobileDark,
   position = "center",
   positionMobile,
   class: className,
 } = Astro.props;
 
 const toSet = (png: string) => {
-  const base = png.replace(/\.(png|jpe?g)$/i, "");
-  return `image-set(url("${base}.avif") type("image/avif"), url("${base}.webp") type("image/webp"), url("${png}") type("image/png"))`;
+  const avif = png.replace("/png/", "/avif/").replace(/\.(png|jpe?g)$/i, ".avif");
+  const webp = png.replace("/png/", "/webp/").replace(/\.(png|jpe?g)$/i, ".webp");
+  return `image-set(url("${avif}") type("image/avif"), url("${webp}") type("image/webp"), url("${png}") type("image/png"))`;
 };
 
 const desktopSet = toSet(image);
 const mobileSet = toSet(imageMobile ?? image);
+const hasDark = Boolean(imageDark || imageMobileDark);
+const desktopSetDark = hasDark ? toSet(imageDark ?? image) : "";
+const mobileSetDark = hasDark
+  ? toSet(imageMobileDark ?? imageDark ?? imageMobile ?? image)
+  : "";
+
+const baseClasses = [
+  "fixed top-0 left-0 -z-10 w-screen h-[var(--fb-h,100vh)]",
+  "bg-[position:var(--bg-pos-mobile)] md:bg-[position:var(--bg-pos-desktop)]",
+  "bg-cover bg-no-repeat transform-gpu backface-hidden brightness-[0.7]",
+];
+
+const positions = `--bg-pos-mobile: ${positionMobile ?? position}; --bg-pos-desktop: ${position}`;
 ---
 
+<!-- Capa light (base) -->
 <div
   aria-hidden="true"
   class:list={[
-    "fixed top-0 left-0 -z-10 w-screen h-[var(--fb-h,100vh)]",
+    ...baseClasses,
     "bg-[image:var(--bg-mobile)] md:bg-[image:var(--bg-desktop)]",
-    "bg-[position:var(--bg-pos-mobile)] md:bg-[position:var(--bg-pos-desktop)]",
-    "bg-cover bg-no-repeat transform-gpu backface-hidden brightness-[0.7]",
     className,
   ]}
-  style={`--bg-mobile: ${mobileSet}; --bg-desktop: ${desktopSet}; --bg-pos-mobile: ${positionMobile ?? position}; --bg-pos-desktop: ${position}`}
+  style={`--bg-mobile: ${mobileSet}; --bg-desktop: ${desktopSet}; ${positions}`}
 >
 </div>
+
+{
+  /* Capa dark encima: cross-fade vía opacity (background-image no es animable).
+     La imagen se aplica solo en dark para no descargarla en modo light. */
+  hasDark && (
+    <div
+      aria-hidden="true"
+      class:list={[
+        ...baseClasses,
+        "dark-ready:bg-[image:var(--bg-mobile-dark)] md:dark-ready:bg-[image:var(--bg-desktop-dark)]",
+        "opacity-0 transition-opacity duration-500 ease-in-out dark:opacity-100",
+        className,
+      ]}
+      style={`--bg-mobile-dark: ${mobileSetDark}; --bg-desktop-dark: ${desktopSetDark}; ${positions}`}
+    />
+  )
+}
