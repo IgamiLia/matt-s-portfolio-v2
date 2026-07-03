@@ -13,6 +13,10 @@
    cross-fade de salida sea suave (la imagen ya está cacheada). */
 @custom-variant dark-ready (&:where([data-dark-ready], [data-dark-ready] *));
 
+/* Análogo para light: evita descargar las imágenes light si el usuario
+   entra directo en dark. Incluye el caso sin JS (sin data-theme). */
+@custom-variant light-ready (&:where([data-light-ready], [data-light-ready] *, html:not([data-theme]) *));
+
 html {
   scrollbar-gutter: stable;
   scrollbar-width: thin;

@@ -12,22 +12,41 @@ import ProjectModal from "@components/ProjectModal.astro";
   description="Bienvenido al portafolio de Matías Aguirre, desarrollador web frontend de Buenos Aires. Explora proyectos hechos con Astro, JavaScript y TypeScript, enfocados en experiencias únicas y memorables."
 >
   <Fragment slot="head">
-    <!-- Preload theme-aware del hero: corre tras el script anti-FOUC del layout -->
-    <script is:inline>
-      (() => {
-        const dark = document.documentElement.dataset.theme === "dark";
-        const desktop = matchMedia("(min-width: 768px)").matches;
-        const base = dark
-          ? "/backgrounds/dark/avif/bg-hero-dark"
-          : "/backgrounds/avif/bg-header";
-        const link = document.createElement("link");
-        link.rel = "preload";
-        link.as = "image";
-        link.type = "image/avif";
-        link.href = `${base}${desktop ? "" : "-mobile"}.avif`;
-        document.head.append(link);
-      })();
-    </script>
+    <!-- Preloads estáticos: visibles para el preload scanner (crítico para LCP).
+         Gateados por viewport + prefers-color-scheme; si el usuario forzó un tema
+         distinto al del SO se precarga uno de más, tradeoff aceptable. -->
+    <link
+      rel="preload"
+      as="image"
+      href="/backgrounds/avif/bg-header.avif"
+      type="image/avif"
+      fetchpriority="high"
+      media="(min-width: 768px) and (prefers-color-scheme: light)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/backgrounds/avif/bg-header-mobile.avif"
+      type="image/avif"
+      fetchpriority="high"
+      media="(max-width: 767.98px) and (prefers-color-scheme: light)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/backgrounds/dark/avif/bg-hero-dark.avif"
+      type="image/avif"
+      fetchpriority="high"
+      media="(min-width: 768px) and (prefers-color-scheme: dark)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/backgrounds/dark/avif/bg-hero-dark-mobile.avif"
+      type="image/avif"
+      fetchpriority="high"
+      media="(max-width: 767.98px) and (prefers-color-scheme: dark)"
+    />
   </Fragment>
 
   <Hero />

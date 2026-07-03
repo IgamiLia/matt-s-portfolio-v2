@@ -6,6 +6,9 @@ interface Props {
   imageMobileDark?: string;
   position?: string;
   positionMobile?: string;
+  /** Difiere la descarga de las imágenes hasta que la sección se acerque
+      al viewport. Usar en secciones below-the-fold (projects, footer). */
+  lazy?: boolean;
   class?: string;
 }
 
@@ -16,6 +19,7 @@ const {
   imageMobileDark,
   position = "center",
   positionMobile,
+  lazy = false,
   class: className,
 } = Astro.props;
 
@@ -40,6 +44,15 @@ const baseClasses = [
 ];
 
 const positions = `--bg-pos-mobile: ${positionMobile ?? position}; --bg-pos-desktop: ${position}`;
+
+// En modo lazy las image-sets van en data-* y un script las promueve a
+// CSS vars cuando la sección se acerca al viewport (IntersectionObserver).
+const lightStyle = lazy
+  ? positions
+  : `--bg-mobile: ${mobileSet}; --bg-desktop: ${desktopSet}; ${positions}`;
+const darkStyle = lazy
+  ? positions
+  : `--bg-mobile-dark: ${mobileSetDark}; --bg-desktop-dark: ${desktopSetDark}; ${positions}`;
 ---
 
 <!-- Capa light (base) -->
@@ -47,10 +60,16 @@ const positions = `--bg-pos-mobile: ${positionMobile ?? position}; --bg-pos-desk
   aria-hidden="true"
   class:list={[
     ...baseClasses,
-    "bg-[image:var(--bg-mobile)] md:bg-[image:var(--bg-desktop)]",
+    "light-ready:bg-[image:var(--bg-mobile)] md:light-ready:bg-[image:var(--bg-desktop)]",
+    hasDark && "dark:opacity-0 transition-opacity duration-500 ease-in-out",
     className,
   ]}
-  style={`--bg-mobile: ${mobileSet}; --bg-desktop: ${desktopSet}; ${positions}`}
+  style={lightStyle}
+  data-bg-lazy={lazy ? "" : undefined}
+  data-bg-mobile={lazy ? mobileSet : undefined}
+  data-bg-desktop={lazy ? desktopSet : undefined}
+  data-bg-var="--bg-mobile"
+  data-bg-var-desktop="--bg-desktop"
 >
 </div>
 
@@ -66,7 +85,54 @@ const positions = `--bg-pos-mobile: ${positionMobile ?? position}; --bg-pos-desk
         "opacity-0 transition-opacity duration-500 ease-in-out dark:opacity-100",
         className,
       ]}
-      style={`--bg-mobile-dark: ${mobileSetDark}; --bg-desktop-dark: ${desktopSetDark}; ${positions}`}
+      style={darkStyle}
+      data-bg-lazy={lazy ? "" : undefined}
+      data-bg-mobile={lazy ? mobileSetDark : undefined}
+      data-bg-desktop={lazy ? desktopSetDark : undefined}
+      data-bg-var="--bg-mobile-dark"
+      data-bg-var-desktop="--bg-desktop-dark"
     />
   )
 }
+
+<script>
+  function initLazyBackgrounds(): void {
+    const lazyDivs =
+      document.querySelectorAll<HTMLElement>("[data-bg-lazy]");
+    if (!lazyDivs.length) return;
+
+    const reveal = (el: HTMLElement): void => {
+      el.style.setProperty(el.dataset.bgVar!, el.dataset.bgMobile!);
+      el.style.setProperty(el.dataset.bgVarDesktop!, el.dataset.bgDesktop!);
+      delete el.dataset.bgLazy;
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      lazyDivs.forEach(reveal);
+      return;
+    }
+
+    // Se observa la sección contenedora: el div es position:fixed y para
+    // el observer siempre estaría "en viewport".
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target
+            .querySelectorAll<HTMLElement>("[data-bg-lazy]")
+            .forEach(reveal);
+          observer.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "75% 0px" },
+    );
+
+    const sections = new Set<Element>();
+    lazyDivs.forEach((div) => {
+      if (div.parentElement) sections.add(div.parentElement);
+    });
+    sections.forEach((section) => observer.observe(section));
+  }
+
+  document.addEventListener("astro:page-load", initLazyBackgrounds);
+</script>

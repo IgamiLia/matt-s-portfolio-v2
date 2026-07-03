@@ -20,8 +20,10 @@ export function resolveTheme(theme: Theme = getTheme()): ResolvedTheme {
 export function applyTheme(): void {
   const resolved = resolveTheme();
   document.documentElement.dataset.theme = resolved;
-  // Flag permanente: habilita el cross-fade de salida (dark → light)
+  // Flags permanentes: cada tema descarga sus imágenes recién cuando se usa,
+  // y las retiene después para que el cross-fade de salida sea suave.
   if (resolved === "dark") document.documentElement.dataset.darkReady = "";
+  else document.documentElement.dataset.lightReady = "";
 }
 
 /** Guarda la preferencia y la aplica. "system" borra la key. */
