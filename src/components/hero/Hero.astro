@@ -8,12 +8,26 @@ import FixedBackground from "@ui/FixedBackground.astro";
 >
   <FixedBackground
     image="/backgrounds/png/bg-header.png"
-    imageMobile="/backgrounds/png/bg-header-mobile.png"
     imageDark="/backgrounds/dark/png/bg-hero-dark.png"
     imageMobileDark="/backgrounds/dark/png/bg-hero-dark-mobile.png"
-    position="center 62%"
+    position="center 70%"
     positionMobile="center 72%"
   />
+
+  <div
+    aria-hidden="true"
+    data-hero-sky
+    class="fixed top-0 left-0 -z-10 h-[var(--fb-h,100vh)] w-screen overflow-hidden transition-opacity duration-500 ease-in-out dark:opacity-0"
+  >
+    <img
+      src="/sprites/png/sun.png"
+      alt=""
+      width="256"
+      height="256"
+      decoding="async"
+      class="absolute top-[30%] md:top-[12%] right-[8%] h-auto w-12 md:w-48 drop-shadow-[0_0_16px_rgba(255,255,255,1)] hidden"
+    />
+  </div>
 
   <div
     class="group absolute bottom-0 left-1/2 flex w-full -translate-x-1/2 items-end justify-center px-4 sm:px-6 lg:px-8"
@@ -38,3 +52,55 @@ import FixedBackground from "@ui/FixedBackground.astro";
     </h1>
   </div>
 </main>
+
+<style is:global>
+  .hero-cloud {
+    left: 0;
+    animation: hero-cloud-drift 60s linear infinite;
+  }
+
+  @keyframes hero-cloud-drift {
+    from {
+      translate: -300px 0;
+    }
+    to {
+      translate: calc(100vw + 60px) 0;
+    }
+  }
+</style>
+
+<script>
+  const CLOUD_COUNT_DESKTOP = 28;
+  const CLOUD_COUNT_MOBILE = 16;
+
+  function initHeroSky(): void {
+    const sky = document.querySelector<HTMLElement>("[data-hero-sky]");
+    if (!sky || sky.querySelector(".hero-cloud")) return;
+
+    const isDesktop = matchMedia("(min-width: 768px)").matches;
+    const count = isDesktop ? CLOUD_COUNT_DESKTOP : CLOUD_COUNT_MOBILE;
+
+    for (let i = 0; i < count; i++) {
+      const cloud = document.createElement("img");
+      const duration = 40 + Math.random() * 40;
+
+      cloud.src = "/sprites/png/cloud.png";
+      cloud.alt = "";
+      cloud.width = 128;
+      cloud.height = 64;
+      cloud.decoding = "async";
+      cloud.className = "hero-cloud absolute h-auto w-32 ";
+      cloud.style.top = `${5 + Math.random() * 80}%`;
+      cloud.style.scale = isDesktop
+        ? String(0.6 + Math.random() * 2.5)
+        : String(0.5 + Math.random() * 0.8);
+      cloud.style.opacity = String(0.7 + Math.random() * 0.3);
+      cloud.style.animationDuration = `${duration}s`;
+      cloud.style.animationDelay = `-${Math.random() * duration}s`;
+
+      sky.append(cloud);
+    }
+  }
+
+  document.addEventListener("astro:page-load", initHeroSky);
+</script>
